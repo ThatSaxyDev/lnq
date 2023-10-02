@@ -7,7 +7,6 @@ import "package:flutter/services.dart";
 import "package:flutter_animate/flutter_animate.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:lnq/shared/app_fonts.dart";
-import "package:lnq/theme/palette.dart";
 import "package:intl/intl.dart";
 import "package:lnq/shared/utils/type_defs.dart";
 // import 'package:url_launcher/url_launcher.dart' show launchUrl;
@@ -70,7 +69,7 @@ extension StyledTextExtension on String {
       style: TextStyle(
         height: height,
         fontSize: size ?? 14.sp,
-        color: color ?? Palette.blackColor.withOpacity(0.75),
+        color: color,
         fontWeight: switch (fontW) {
           F.w3 => FontWeight.w300,
           F.w5 => FontWeight.w500,
@@ -109,7 +108,7 @@ extension StyledTextExtension14 on String {
       style: TextStyle(
         height: height,
         fontSize: 14.sp,
-        color: color ?? Palette.blackColor.withOpacity(0.75),
+        color: color,
         fontWeight: switch (fontW) {
           F.w3 => FontWeight.w300,
           F.w5 => FontWeight.w500,
@@ -148,7 +147,7 @@ extension StyledTextExtension12 on String {
       style: TextStyle(
         height: height,
         fontSize: 12.sp,
-        color: color ?? Palette.blackColor.withOpacity(0.75),
+        color: color,
         fontWeight: switch (fontW) {
           F.w3 => FontWeight.w300,
           F.w5 => FontWeight.w500,
@@ -187,7 +186,7 @@ extension StyledTextExtension16 on String {
       style: TextStyle(
         height: height,
         fontSize: 16.sp,
-        color: color ?? Palette.blackColor.withOpacity(0.75),
+        color: color,
         fontWeight: switch (fontW) {
           F.w3 => FontWeight.w300,
           F.w5 => FontWeight.w500,
@@ -226,7 +225,7 @@ extension StyledTextExtension18 on String {
       style: TextStyle(
         height: height,
         fontSize: 18.sp,
-        color: color ?? Palette.blackColor.withOpacity(0.75),
+        color: color,
         fontWeight: switch (fontW) {
           F.w3 => FontWeight.w300,
           F.w5 => FontWeight.w500,
@@ -265,7 +264,7 @@ extension StyledTextExtension24 on String {
       style: TextStyle(
         height: height,
         fontSize: 24.sp,
-        color: color ?? Palette.blackColor.withOpacity(0.75),
+        color: color,
         fontWeight: switch (fontW) {
           F.w3 => FontWeight.w300,
           F.w5 => FontWeight.w500,
@@ -304,7 +303,7 @@ extension StyledTextExtension30 on String {
       style: TextStyle(
         height: height,
         fontSize: 28.sp,
-        color: color ?? Palette.blackColor.withOpacity(0.75),
+        color: color,
         fontWeight: switch (fontW) {
           F.w3 => FontWeight.w300,
           F.w5 => FontWeight.w500,
@@ -343,7 +342,7 @@ extension StyledTextExtension20 on String {
       style: TextStyle(
         height: height,
         fontSize: 20.sp,
-        color: color ?? Palette.blackColor.withOpacity(0.75),
+        color: color,
         fontWeight: switch (fontW) {
           F.w3 => FontWeight.w300,
           F.w5 => FontWeight.w500,

@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lnq/core/routing/router.dart';
-import 'package:lnq/shared/app_fonts.dart';
 import 'package:lnq/shared/app_texts.dart';
 import 'package:lnq/theme/palette.dart';
 import 'package:routemaster/routemaster.dart';
 
-void main() {
+Future<void> main() async {
   runApp(
     const ProviderScope(child: LnqApp()),
   );
 }
 
-class LnqApp extends StatelessWidget {
+class LnqApp extends ConsumerWidget {
   const LnqApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ScreenUtilInit(
         designSize: const Size(375, 812),
         minTextAdapt: true,
@@ -27,11 +26,7 @@ class LnqApp extends StatelessWidget {
             return MaterialApp.router(
               title: AppTexts.appName,
               debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                fontFamily: AppFonts.mont,
-                colorScheme: ColorScheme.fromSeed(seedColor: Palette.blueColor),
-                useMaterial3: true,
-              ),
+              theme: ref.watch(themeNotifierProvider),
               routerDelegate: RoutemasterDelegate(
                 routesBuilder: (context) {
                   // if (userData != null) {

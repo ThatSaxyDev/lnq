@@ -1,7 +1,7 @@
 import 'package:lnq/shared/app_extensions.dart';
 
 abstract class AppGrafiks {
-  static String logo = 'plogo'.png;
+  static String logo = 'lnqlogoo'.png;
   static String whitelogo = 'pLogoWhite'.png;
   static String textlogo = 'pLogoText'.png;
 

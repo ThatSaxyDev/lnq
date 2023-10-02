@@ -81,7 +81,7 @@ class Palette {
   // Themes
   static var darkModeAppTheme = ThemeData.dark().copyWith(
     textTheme: ThemeData.dark().textTheme.apply(
-          // fontFamily: AppTexts.appFont,
+           fontFamily: AppFonts.mont,
         ),
     scaffoldBackgroundColor: blackColor,
     cardColor: greyColor,
