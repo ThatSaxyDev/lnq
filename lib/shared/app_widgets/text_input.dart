@@ -7,7 +7,7 @@ import 'package:lnq/shared/app_extensions.dart';
 import 'package:lnq/shared/app_fonts.dart';
 import 'package:lnq/theme/palette.dart';
 
-class TextInputWidget extends StatelessWidget {
+class TextInputWidget extends StatefulWidget {
   final double? height;
   final double? width;
   final String inputTitle;
@@ -31,7 +31,7 @@ class TextInputWidget extends StatelessWidget {
   final Color? borderColor;
   final F? titleFontWeight;
   final void Function()? onTap;
-  final void Function(PointerDownEvent)? onTapOutside;
+  final void Function()? onTapOutside;
   final Widget? iconn;
   final int? maxLength;
   final int? maxLines;
@@ -43,7 +43,7 @@ class TextInputWidget extends StatelessWidget {
     required this.inputTitle,
     required this.hintText,
     this.hastitle = true,
-    this.filled,
+    this.filled = true,
     this.readOnly = false,
     this.fillColor,
     required this.controller,
@@ -69,91 +69,125 @@ class TextInputWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<TextInputWidget> createState() => _TextInputWidgetState();
+}
+
+class _TextInputWidgetState extends State<TextInputWidget> {
+  ValueNotifier<bool> isFocused = false.notifier;
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
-      onTap: onTap,
+      onTap: () {
+        // widget.onTap;
+        // isFocused.value = true;
+      },
       child: SizedBox(
-        // color: Colors.red,
-        height: hastitle ? 86.h : 61.h,
-        width: width ?? double.infinity,
+        height: widget.hastitle ? 60.h : 40.h,
+        width: widget.width ?? double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (hastitle == true)
+            if (widget.hastitle == true)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  inputTitle.txt14(fontW: titleFontWeight),
-                  if (cardIcon != null) cardIcon!
+                  widget.inputTitle.txt12(fontW: widget.titleFontWeight),
+                  if (widget.cardIcon != null) widget.cardIcon!
                 ],
               ),
             SizedBox(
-              height: 61.h,
-              child: TextFormField(
-                readOnly: readOnly,
-                maxLines: maxLines,
-                maxLength: maxLength,
-                onTap: onTap,
-                onTapOutside: onTapOutside,
-                keyboardType: keyboardType,
-                focusNode: focusNode,
-                onFieldSubmitted: onFieldSubmitted,
-                onChanged: onChanged,
-                onSaved: onSaved,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: Palette.blackColor,
-                  fontFamily: AppFonts.mont,
-                ),
-                controller: controller,
-                inputFormatters: inputFormatters,
-                obscureText: obscuretext,
-                obscuringCharacter: '*',
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                  filled: filled,
-                  fillColor: fillColor,
-                  // isDense: true,
-                  suffix: suffix,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.w).copyWith(left: 12.w),
-                  helperText: " ",
-                  helperStyle: const TextStyle(fontSize: 0.0005),
-                  errorStyle: const TextStyle(fontSize: 0.0005),
-                  suffixIcon: suffixIcon,
-                  suffixIconConstraints:
-                      BoxConstraints(minHeight: 20.h, minWidth: 20.w),
-                  hintText: hintText,
-                  hintStyle: TextStyle(
-                    color: const Color(0xFF767475),
-                    fontSize: 16.sp,
+              height: 40.h,
+              child: isFocused.sync(
+                builder: (context, value, child) => TextFormField(
+                  readOnly: widget.readOnly,
+                  maxLines: widget.maxLines ?? 1,
+                  maxLength: widget.maxLength,
+                  onTap: () {
+                    if (widget.onTap != null) widget.onTap!.call();
+                    isFocused.value = true;
+                  },
+                  onTapOutside: (event) {
+                    if (widget.onTapOutside != null) {
+                      widget.onTapOutside!.call();
+                    }
+                    isFocused.value = false;
+                  },
+                  keyboardType: widget.keyboardType,
+                  focusNode: widget.focusNode,
+                  onFieldSubmitted: widget.onFieldSubmitted,
+                  onChanged: widget.onChanged,
+                  onSaved: widget.onSaved,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Palette.blackColor,
                     fontFamily: AppFonts.mont,
                   ),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFFCBD2E0)),
-                    borderRadius: BorderRadius.circular(5.r),
+                  controller: widget.controller,
+                  inputFormatters: widget.inputFormatters,
+                  obscureText: widget.obscuretext,
+                  obscuringCharacter: '*',
+                  cursorColor: Colors.white,
+                  decoration: InputDecoration(
+                    filled: widget.filled,
+                    fillColor: widget.fillColor ?? Colors.white.withOpacity(0.05),
+                    // isDense: true,
+                    suffix: widget.suffix,
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.w)
+                        .copyWith(left: 12.w),
+                    helperText: " ",
+                    helperStyle: const TextStyle(fontSize: 0.0005),
+                    errorStyle: const TextStyle(fontSize: 0.0005),
+                    suffixIcon: widget.suffixIcon,
+                    suffixIconConstraints:
+                        BoxConstraints(minHeight: 20.h, minWidth: 20.w),
+                    hintText: widget.hintText,
+                    hintStyle: TextStyle(
+                      color: const Color(0xFF767475),
+                      fontSize: 14.sp,
+                      fontFamily: AppFonts.mont,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: isFocused.value
+                              ? const Color(0xFFCBD2E0)
+                              : Colors.transparent),
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: isFocused.value
+                              ? const Color(0xFFCBD2E0)
+                              : Colors.transparent),
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: isFocused.value
+                              ? const Color(0xFFCBD2E0)
+                              : Colors.transparent),
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: isFocused.value
+                              ? const Color(0xFFCBD2E0)
+                              : Colors.transparent),
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: isFocused.value
+                              ? const Color(0xFFCBD2E0)
+                              : Colors.transparent),
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFFCBD2E0)),
-                    borderRadius: BorderRadius.circular(5.r),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFFCBD2E0)),
-                    borderRadius: BorderRadius.circular(5.r),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.red),
-                    borderRadius: BorderRadius.circular(5.r),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFFCBD2E0)),
-                    borderRadius: BorderRadius.circular(5.r),
-                  ),
+                  validator: widget.validator,
                 ),
-                validator: validator,
               ),
             ),
           ],

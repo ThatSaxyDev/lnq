@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lnq/shared/app_extensions.dart';
 import 'package:lnq/theme/palette.dart';
 
 class BButton extends StatelessWidget {
@@ -19,56 +18,58 @@ class BButton extends StatelessWidget {
   final bool isText;
   final Color? textColor;
   final bool showBorder;
-  final Gradient? gradient;
   const BButton({
     Key? key,
     this.height,
     this.width,
     this.fontSize,
-    this.fontWeight,
     this.radius,
     required this.onTap,
     this.color,
     this.item,
     this.text,
     this.isText = true,
-    this.textColor,
     this.showBorder = false,
-    this.gradient,
+    this.textColor,
+    this.fontWeight,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height ?? 61.h,
+    return SizedBox(
+      height: height ?? 41.h,
       width: width ?? double.infinity,
-      decoration: ShapeDecoration(
-        gradient: gradient ??
-            const LinearGradient(
-              begin: Alignment(-1.00, -0.00),
-              end: Alignment(1, 0),
-              colors: [
-                Color(0xFF903AFF),
-                Color(0xFFD434FE),
-                Color(0xFFFF25B8),
-                Color(0xFFFE34B9)
-              ],
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              width: 1,
+              color: showBorder ? Palette.blackColor : Colors.transparent,
             ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(radius ?? 5.r),
+            ),
+          ),
+          padding: EdgeInsets.zero,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          backgroundColor: color ?? Palette.whiteColor,
+        ),
+        child: Center(
+          child: isText == true
+              ? Text(
+                  text ?? '',
+                  style: TextStyle(
+                    fontSize: fontSize ?? 14.sp,
+                    fontWeight: fontWeight ?? FontWeight.w600,
+                    color: textColor ?? Palette.drawerColor,
+                  ),
+                )
+              : item,
+        ),
       ),
-      child: Center(
-        child: isText == true
-            ? Text(
-                text ?? '',
-                style: TextStyle(
-                  fontSize: fontSize ?? 14.sp,
-                  fontWeight: fontWeight ?? FontWeight.w400,
-                  color: textColor ?? Palette.whiteColor,
-                ),
-              )
-            : item,
-      ),
-    ).tap(onTap: onTap);
+    );
   }
 }
 

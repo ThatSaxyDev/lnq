@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lnq/core/routing/router.dart';
+import 'package:lnq/env/env.dart';
 import 'package:lnq/shared/app_texts.dart';
 import 'package:lnq/theme/palette.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
+  await Supabase.initialize(
+    url: Env.baseUrl,
+    anonKey: Env.apiKey,
+  );
   runApp(
     const ProviderScope(child: LnqApp()),
   );

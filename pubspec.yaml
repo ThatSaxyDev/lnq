@@ -39,12 +39,15 @@ dependencies:
   cached_network_image: ^3.3.0
   xtended: ^0.1.5
   flutter_appauth: ^6.0.2
+  envied_flutter: ^0.3.0+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
+  envied_flutter_generator: ^0.3.0
 
 
 flutter:

@@ -13,7 +13,7 @@ import "package:lnq/shared/utils/type_defs.dart";
 
 //! LOG EXTENSION - THIS HELPS TO CALL PRINT SAFELY ON ANY OBJECT
 extension Log on Object {
-  void logg() {
+  void log() {
     if (kDebugMode) {
       print(toString());
     }
