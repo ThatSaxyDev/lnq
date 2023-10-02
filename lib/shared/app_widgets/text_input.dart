@@ -74,6 +74,26 @@ class TextInputWidget extends StatefulWidget {
 
 class _TextInputWidgetState extends State<TextInputWidget> {
   ValueNotifier<bool> isFocused = false.notifier;
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        isFocused.value = true;
+      } else {
+        isFocused.value = false;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,24 +126,25 @@ class _TextInputWidgetState extends State<TextInputWidget> {
                   readOnly: widget.readOnly,
                   maxLines: widget.maxLines ?? 1,
                   maxLength: widget.maxLength,
+                  maxLengthEnforcement: MaxLengthEnforcement.truncateAfterCompositionEnds,
                   onTap: () {
                     if (widget.onTap != null) widget.onTap!.call();
-                    isFocused.value = true;
+                    // isFocused.value = true;
                   },
                   onTapOutside: (event) {
                     if (widget.onTapOutside != null) {
                       widget.onTapOutside!.call();
                     }
-                    isFocused.value = false;
+                    // isFocused.value = false;
                   },
                   keyboardType: widget.keyboardType,
-                  focusNode: widget.focusNode,
+                  focusNode: _focusNode,
                   onFieldSubmitted: widget.onFieldSubmitted,
                   onChanged: widget.onChanged,
                   onSaved: widget.onSaved,
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: Palette.blackColor,
+                    color: Palette.whiteColor,
                     fontFamily: AppFonts.mont,
                   ),
                   controller: widget.controller,
@@ -133,7 +154,8 @@ class _TextInputWidgetState extends State<TextInputWidget> {
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
                     filled: widget.filled,
-                    fillColor: widget.fillColor ?? Colors.white.withOpacity(0.05),
+                    fillColor:
+                        widget.fillColor ?? Colors.white.withOpacity(0.05),
                     // isDense: true,
                     suffix: widget.suffix,
                     contentPadding: EdgeInsets.symmetric(vertical: 10.w)

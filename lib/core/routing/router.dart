@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lnq/core/routing/app_routes.dart';
 import 'package:lnq/features/auth/views/login_view.dart';
 import 'package:lnq/features/base_nav/wrapper/base_nav_wrapper.dart';
+import 'package:lnq/features/profile/views/complete_profile_view.dart';
 import 'package:routemaster/routemaster.dart';
 
 RouteMap loggedOutRoute = RouteMap(routes: {
